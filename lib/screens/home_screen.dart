@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 
-class RecipeBook extends StatelessWidget {
-  const RecipeBook({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.orange,
-        title: const Text(
-          'Recipe Book',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: 125,
         child: Card(
           child: Row(children: [
-            Container(
+            SizedBox(
               height: 125,
               width: 100,
               child: ClipRRect(
