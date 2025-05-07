@@ -90,10 +90,16 @@ class RecipeForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    final TextEditingController _recipeName = TextEditingController();
+    final TextEditingController _recipeAuthor = TextEditingController();
+    final TextEditingController _recipeImg = TextEditingController();
+    final TextEditingController _recipeDescription = TextEditingController();
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Form(
-        //key: _formKey,
+        key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -105,16 +111,89 @@ class RecipeForm extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            _buildTextField(label: 'Recipe name'),
+            _buildTextField(
+                controller: _recipeName,
+                label: 'Recipe name',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return ('Please enter the recipe name');
+                  }
+                  return null;
+                }),
+            const SizedBox(
+              height: 16,
+            ),
+            _buildTextField(
+                controller: _recipeAuthor,
+                label: 'Created by',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return ('Please enter the recipe author');
+                  }
+                  return null;
+                }),
+            const SizedBox(
+              height: 16,
+            ),
+            _buildTextField(
+                controller: _recipeImg,
+                label: 'Image URL',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return ('Please enter the image URL');
+                  }
+                  return null;
+                }),
+            const SizedBox(
+              height: 16,
+            ),
+            _buildTextField(
+                controller: _recipeDescription,
+                label: 'Recipe',
+                maxLines: 4,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return ('Please enter the recipe description');
+                  }
+                  return null;
+                }),
+            const SizedBox(
+              height: 16,
+            ),
+            Center(
+              child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      )),
+                  child: const Text(
+                    'Save Recipe',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  )),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField({required String label}) {
+  Widget _buildTextField(
+      {required String label,
+      required TextEditingController controller,
+      required String? Function(String?) validator,
+      int maxLines = 1}) {
     return TextFormField(
       decoration: InputDecoration(
+        icon: const Icon(Icons.dining),
         labelText: label,
         labelStyle: const TextStyle(
           fontFamily: 'Quicksand',
@@ -128,6 +207,8 @@ class RecipeForm extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
       ),
+      validator: validator,
+      maxLines: maxLines,
     );
   }
 }
