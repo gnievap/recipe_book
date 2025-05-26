@@ -16,14 +16,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    fetchRecipes();
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          _recipesCard(context),
-          _recipesCard(context),
-        ],
-      ),
+      body: FutureBuilder<List<dynamic>>(
+          future: fetchRecipes(),
+          builder: (context, snapshot) {
+            final recipes = snapshot.data ?? [];
+            return ListView.builder(
+              itemCount: recipes.length,
+              itemBuilder: (context, index) {
+                return _recipesCard(context, recipes[index]);
+              },
+            );
+          }),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.orange,
           child: const Icon(Icons.add, color: Colors.white),
@@ -44,14 +48,14 @@ class HomeScreen extends StatelessWidget {
             ));
   }
 
-  Widget _recipesCard(BuildContext context) {
+  Widget _recipesCard(BuildContext context, dynamic recipe) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    const RecipeDetail(recipeName: 'Lasagna')));
+                    RecipeDetail(recipeName: recipe['name'])));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -65,9 +69,7 @@ class HomeScreen extends StatelessWidget {
                 width: 100,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                      'https://static.platzi.com/media/uploads/flutter_lasana_b894f1aee1.jpg',
-                      fit: BoxFit.cover),
+                  child: Image.network(recipe['image_link'], fit: BoxFit.cover),
                 ),
               ),
               const SizedBox(
@@ -77,9 +79,10 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Lasagna',
-                    style: TextStyle(fontSize: 16, fontFamily: 'Quicksand'),
+                  Text(
+                    recipe['name'],
+                    style:
+                        const TextStyle(fontSize: 16, fontFamily: 'Quicksand'),
                   ),
                   const SizedBox(
                     height: 4.0,
@@ -89,9 +92,10 @@ class HomeScreen extends StatelessWidget {
                     width: 75,
                     color: Colors.orange,
                   ),
-                  const Text(
-                    'Gaby N.',
-                    style: TextStyle(fontSize: 16, fontFamily: 'Quicksand'),
+                  Text(
+                    recipe['author'],
+                    style:
+                        const TextStyle(fontSize: 16, fontFamily: 'Quicksand'),
                   ),
                   const SizedBox(
                     height: 4.0,

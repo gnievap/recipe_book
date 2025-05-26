@@ -5,7 +5,7 @@
   "endpointPrefix": "",
   "latency": 0,
   "port": 3001,
-  "hostname": "",
+  "hostname": "localhost",
   "folders": [],
   "routes": [
     {
@@ -38,12 +38,47 @@
       "responseMode": null,
       "streamingMode": null,
       "streamingInterval": 0
+    },
+    {
+      "uuid": "a355a380-5023-4d94-9e0f-ba4652a054c7",
+      "type": "http",
+      "documentation": "",
+      "method": "all",
+      "endpoint": "",
+      "responses": [
+        {
+          "uuid": "6723f3f7-df06-4b21-b893-ba5ded73c1d3",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
     }
   ],
   "rootChildren": [
     {
       "type": "route",
       "uuid": "1d5eee44-a692-470e-b64f-50981ad583b6"
+    },
+    {
+      "type": "route",
+      "uuid": "a355a380-5023-4d94-9e0f-ba4652a054c7"
     }
   ],
   "proxyMode": false,
