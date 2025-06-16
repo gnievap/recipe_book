@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
       body: Consumer<RecipesProvider>(builder: (context, provider, child) {
         if (provider.isLoading) {
           return const Center(
-            child: Text('No recipes found'),
+            child: CircularProgressIndicator(),
           );
         } else if (provider.recipes.isEmpty) {
           return const Center(
