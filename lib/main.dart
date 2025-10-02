@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_book/providers/recipes_provider.dart';
+import 'package:recipe_book/screens/favorites_recipes.dart';
 import 'package:recipe_book/screens/home_screen.dart';
 
 void main() {
@@ -45,10 +46,14 @@ class RecipeBook extends StatelessWidget {
                   icon: Icon(Icons.home),
                   text: 'Home',
                 ),
+                Tab(
+                  icon: Icon(Icons.favorite),
+                  text: 'Favorites',
+                ),
               ],
             )),
         body: const TabBarView(
-          children: [HomeScreen()],
+          children: [HomeScreen(), FavoritesRecipes()],
         ),
       ),
     );
